@@ -16,7 +16,8 @@ class RoomsList extends Component {
      this.roomsRef.on('child_added', snapshot => {
           const room = snapshot.val();
           room.key = snapshot.key;
-          this.setState({ rooms: this.state.rooms.concat( room ) });
+          this.setState({ rooms: this.state.rooms.concat( room ) })
+          if (this.state.rooms.length === 1) { this.props.setActiveRoom(room) }
         });
           this.roomsRef.on('child_removed', snapshot => {
 	          this.setState({ rooms: this.state.rooms.filter( room => room.key !== snapshot.key) })
@@ -46,7 +47,9 @@ class RoomsList extends Component {
         {
           this.state.rooms.map(room => {
             return (
-              <div key={room.key}>{room.name}</div>
+              <div key={room.key}>
+                <button className="room-name" onClick={ () => this.props.setActiveRoom(room) }>{ room.name }</button>
+              </div>
             )
           })
         }
