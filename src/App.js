@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import RoomsList from './components/RoomsList';
 import MessageList from './components/MessageList';
+import User from './components/User';
 import * as firebase from 'firebase';
 
 var config = {
@@ -29,13 +30,18 @@ class App extends Component {
    this.setState({activeRoom: room});
  }
 
+  setUser(user) {
+    this.setState({user: user});
+  }
+
   render() {
     return (
       <div className="App">
         <header>
           <h1>Bloc Chat</h1>
-          <RoomsList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom.bind(this)} />
-          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
+          <RoomsList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom.bind(this)} user={this.state.user}/>
+          <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}/>
+          <User firebase={firebase} setUser={this.setUser.bind(this)} user={this.state.user}/>
         </header>
         <main>
         </main>
