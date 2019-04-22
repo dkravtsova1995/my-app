@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-
-
-
 class MessageList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       allMessages: [],
-      displayedMessages: [],
       newMessageText:''
     }
 
@@ -23,19 +19,12 @@ class MessageList extends Component {
      this.messagesRef.on('child_added', snapshot => {
           const message = snapshot.val();
           message.key = snapshot.key;
-          this.setState({ allMessages: this.state.allMessages.concat( message ) }, () => {
-        this.showMessages( this.props.activeRoom )
-      });
+          this.setState({ allMessages: this.state.allMessages.concat( message )});
     });
-    this.messagesRef.on('child_removed', snapshot  => {
-      this.setState({ allMessages: this.state.allMessages.filter( message => message.key !== snapshot.key )  }, () => {
-        this.showMessages( this.props.activeRoom )
-      });
-    });
-  }
 
-  componentWillReceiveProps(nextProps) {
-    this.showMessages( nextProps.activeRoom );
+    this.messagesRef.on('child_removed', snapshot  => {
+      this.setState({ allMessages: this.state.allMessages.filter( message => message.key !== snapshot.key ) });
+    });
   }
 
   createMessage(newMessageText) {
@@ -57,8 +46,8 @@ class MessageList extends Component {
     this.messagesRef.child(activeRoom.key).remove();
   }
 
-  showMessages(activeRoom) {
-    this.setState({ displayedMessages: this.state.allMessages.filter( message => message.roomId === activeRoom.key ) });
+  displayedMessages() {
+    return this.state.allMessages.filter(message =>  message.roomId === this.props.activeRoom.key)
   }
 
   render() {
@@ -66,7 +55,7 @@ class MessageList extends Component {
       <main id="messages-component">
         <h2 className="room-name">{ this.props.activeRoom ? this.props.activeRoom.name : '' }</h2>
         <ul id="message-list">
-          {this.state.displayedMessages.map( message =>
+          {this.displayedMessages().map( message =>
             <li className="message-info" key={message.key}>
                 <div className="username">
                   { message.username }
@@ -78,7 +67,7 @@ class MessageList extends Component {
 	  	  { message.sentAt }
 		</Moment>
                 <button type="button" className="btn-remove-msg" onClick={() => this.removeMessage(message)} >
-
+                X
                 </button>
             </li>
           )}
