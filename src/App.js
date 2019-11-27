@@ -38,13 +38,15 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>Bloc Chat</h1>
-          <RoomsList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom.bind(this)} user={this.state.user}/>
+          <aside id="sidebar">
+            <h1 className="App-title">Bloc Chat</h1>
+            <RoomsList firebase={firebase} activeRoom={this.state.activeRoom} setActiveRoom={this.setActiveRoom.bind(this)} user={this.state.user}/>
+         </aside>
           <MessageList firebase={firebase} activeRoom={this.state.activeRoom} user={this.state.user}/>
+        <aside id="sidebar-bottom">
           <User firebase={firebase} setUser={this.setUser.bind(this)} user={this.state.user}/>
+        </aside>
         </header>
-        <main>
-        </main>
       </div>
     );
   }
