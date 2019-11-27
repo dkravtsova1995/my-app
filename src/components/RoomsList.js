@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '.././styles/RoomList.css';
 
 class RoomsList extends Component {
   constructor(props){

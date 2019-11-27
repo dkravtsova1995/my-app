@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import '.././styles/MessageList.css';
 
 class MessageList extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class MessageList extends Component {
 	  	  { message.sentAt }
 		</Moment>
                 <button type="button" className="btn-remove-msg" onClick={() => this.removeMessage(message)} >
-                X
+                 x
                 </button>
             </li>
           )}
